@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>History - Modern Professional</title>
+
+    <style>
+        body {
+            margin:0;
+            font-family:'Segoe UI', sans-serif;
+
+            background-image: url("/static/images/images.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255,255,255,0.9);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            width: 500px;
+        }
+
+        h1 {
+            color: #222;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            color: #333;
+        }
+
+        .risk-high { color: red; font-weight: bold; }
+        .risk-medium { color: orange; font-weight: bold; }
+        .risk-low { color: green; font-weight: bold; }
+
+        a.button {
+            display: block;
+            padding: 12px;
+            border-radius: 8px;
+            background: black;
+            color: white;
+            text-decoration: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a.button:hover {
+            background: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>📜 Check History</h1>
+
+    <table>
+        <tr>
+            <th>Website</th>
+            <th>Risk Level</th>
+            <th>Date</th>
+        </tr>
+
+        {% for site, risk, date in history %}
+        <tr>
+            <td>{{ site }}</td>
+            <td class="risk-{{ risk|lower }}">{{ risk }}</td>
+            <td>{{ date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/home" class="button">Back to Home</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-image:url("/static/images/images.jpg");
+    background-size:cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+.box{
+    background:rgba(0,0,0,0.6);
+    padding:40px;
+    border-radius:12px;
+    width:350px;
+    color:white;
+}
+input,button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:none;
+}
+button{
+    background:#00c853;
+    color:white;
+    font-weight:bold;
+}
+.error{ color:red; margin-top:10px; }
+a{ color:#4dd0e1; }
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Login</h2>
+
+<form method="POST">
+<input type="email" name="email" placeholder="Email" required>
+<input type="password" name="password" placeholder="Password" required>
+<button type="submit">Login</button>
+</form>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<p>New user? <a href="/register">Register</a></p>
+</div>
+
+</body>
+</html>

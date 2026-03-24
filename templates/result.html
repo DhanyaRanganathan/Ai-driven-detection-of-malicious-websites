@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Result</title>
+    <style>
+        body{
+            font-family:'Segoe UI', sans-serif;
+            background: url("/static/images/images.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color:#fff;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+        }
+
+        .container{
+            background: rgba(0,0,0,0.7);
+            padding:30px 25px;
+            border-radius:12px;
+            width:400px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:20px;
+            color:#b2ebf2;
+        }
+
+        ul{
+            list-style:none;
+            padding:0;
+        }
+
+        li{
+            margin:10px 0;
+            font-size:16px;
+        }
+
+        a{
+            display:block;
+            text-align:center;
+            margin-top:20px;
+            color:#00e5ff;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        a:hover{
+            text-decoration:underline;
+        }
+
+        mark {
+            background-color: yellow;
+            color: black;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        /* Risk color classes */
+        .risk-high { color: red; font-weight: bold; }
+        .risk-low { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Analysis Result</h1>
+
+    <ul>
+        <!-- Highlight suspicious words in URL -->
+        <li>Website: 
+            {% set highlighted = analysis['Website'] %}
+            {% for word in ["login","secure","bank","verify","account"] %}
+                {% if word in analysis['Website'].lower() %}
+                    {% set highlighted = highlighted.replace(word, "<mark>" + word + "</mark>") %}
+                {% endif %}
+            {% endfor %}
+            {{ highlighted | safe }}
+        </li>
+
+        <!-- Color-coded Risk -->
+        <li>Risk: 
+            <span class="{{ 'risk-high' if analysis['Risk'] == 'HIGH' else 'risk-low' }}">
+                {{ analysis['Risk'] }}
+            </span>
+        </li>
+
+        <li>Scam: {{ analysis['Scam'] }}</li>
+        <li>Suspicious Keywords: {{ analysis['Suspicious_keywords'] }}</li>
+        <li>Payment Safe: {{ analysis['Payment_safe'] }}</li>
+
+        <!-- Notification for repeated malicious URL -->
+        {% if analysis['Notification'] %}
+            <li style="color:red;">{{ analysis['Notification'] }}</li>
+        {% endif %}
+    </ul>
+
+    <!-- Safe browsing suggestions -->
+    {% if analysis['Risk'] == 'HIGH' %}
+        <p style="color:red;">⚠️ Warning: Avoid submitting sensitive info on this site.</p>
+        <ul>
+            <li>Check the domain carefully</li>
+            <li>Look for HTTPS</li>
+            <li>Do not share passwords or card info</li>
+        </ul>
+    {% else %}
+        <p style="color:green;">✅ This site appears safe.</p>
+    {% endif %}
+
+    <a href="/check">Check Another URL</a>
+</div>
+
+</body>
+</html>

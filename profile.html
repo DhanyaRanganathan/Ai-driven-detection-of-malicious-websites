@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - Modern Professional</title>
+
+    <style>
+body {
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+
+    background-image: url("/static/images/images.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: 0.3s;
+}
+
+/* DARK MODE BODY */
+body.dark {
+    background-image: none;
+    background-color: #121212;
+}
+
+/* CONTAINER */
+.container {
+    background: rgba(255,255,255,0.9);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    width: 420px;
+    transition: 0.3s;
+}
+
+/* DARK MODE CONTAINER */
+body.dark .container {
+    background: #1e1e1e;
+    color: white;
+}
+
+/* HEADINGS */
+h1 {
+    color: #222;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+body.dark h1 {
+    color: white;
+}
+
+/* LABELS */
+label {
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+/* INPUTS */
+input[type=text],
+input[type=email] {
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+/* DARK INPUTS */
+body.dark input[type=text],
+body.dark input[type=email] {
+    background:#333;
+    color:white;
+    border:1px solid #555;
+}
+
+input[type=checkbox] {
+    margin-top:12px;
+}
+
+/* BUTTON */
+button {
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    border-radius:8px;
+    background:black;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#333;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    display:block;
+    margin-top:15px;
+    text-align:center;
+    text-decoration:none;
+    color:black;
+    font-weight:600;
+}
+
+body.dark .back-btn {
+    color:white;
+}
+</style>
+</head>
+
+<body class="{% if dark %}dark{% endif %}">
+
+<div class="container">
+    <h1>👤 User Profile</h1>
+    {% if request.args.get('updated') %}
+<p style="color: green; font-weight: bold;">
+    Profile Updated Successfully!
+</p>
+{% endif %}
+
+    <form method="POST" action="/profile">
+        <label>Name</label>
+        <input type="text" name="name" value="{{ user.name }}">
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ user.email }}">
+
+        <label>
+            <input type="checkbox" name="notifications"
+            {% if user.notifications %}checked{% endif %}>
+            Notifications
+        </label>
+
+        <label>
+            <input type="checkbox" name="dark_mode"
+            {% if user.dark_mode %}checked{% endif %}>
+            Dark Mode
+        </label>
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <a href="/home" class="back-btn">← Back to Home</a>
+</div>
+
+</body>
+</html>
